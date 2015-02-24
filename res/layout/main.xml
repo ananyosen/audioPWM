@@ -25,8 +25,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Duty R"
                 android:id="@+id/textView2"
-                android:layout_alignTop="@+id/textView" android:layout_toRightOf="@+id/button"
-                android:layout_marginLeft="49dp"/>
+                android:layout_marginRight="46dp"
+                android:layout_alignParentRight="true" android:layout_alignTop="@+id/textView"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

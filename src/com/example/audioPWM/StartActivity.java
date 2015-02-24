@@ -47,12 +47,12 @@ public class StartActivity extends Activity
         public void generatePWM()
         {
                 int cycles = (int)(sampleRate*((double)duration/1000))/100;
-                int  L = 50, R = 50;
+                int  L = 60, R = 10;
                 byte samplesbyteR[] = new byte[2*100];
                 byte samplesbyteL[] = new byte[2*100];
                 final byte dataL[] = new byte[2*cycles*100];
                 byte dataR[] = new byte[2*cycles*100];
-
+                byte dataStereo[] = new byte[2*2*cycles*100];
                 short singleSampleL[] = new short[100];
                 short singleSampleR[] = new short[100];
                 for (int iii = 0; iii < 100; iii++)
@@ -80,11 +80,26 @@ public class StartActivity extends Activity
                 for (int iii = 0; iii < 2*cycles*100; iii++)
                 {
                         dataL[iii] = samplesbyteL[iii % 200];
+                        dataR[iii] = samplesbyteR[iii % 200];
                 }
-                AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, 48000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, dataL.length, AudioTrack.MODE_STATIC);
+
+                /* for stereo, if dataL is say {2, 18, 52}
+                *             and dataR is say {5, 25, 35}
+                *       then complete dataStereo will be
+                *       {2, 5, 18, 25, 52, 35}
+                */
+                int lll = 0, rrr = 0;
+                for (int iii = 0; iii < 2*2*cycles*100;)
+                {
+                        dataStereo[iii++] = dataL[lll++];
+                        dataStereo[iii++] = dataL[lll++];
+                        dataStereo[iii++] = dataR[rrr++];
+                        dataStereo[iii++] = dataR[rrr++];
+                }
+                AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, 48000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
 //                int nativeSampleRate = pwm.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
 //                Log.d(TAG, String.valueOf(nativeSampleRate));
-                pwm.write(dataL, 0, dataL.length);
+                pwm.write(dataStereo, 0, dataStereo.length);
                 pwm.play();
                 play.setText("played");
         }

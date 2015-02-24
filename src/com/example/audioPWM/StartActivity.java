@@ -70,7 +70,6 @@ public class StartActivity extends Activity
         public void generatePWM(int dutyL, int dutyR)
         {
                 int cycles = (int)(sampleRate*((double)duration/1000))/100;
-                int  L = dutyL, R = dutyR;
                 byte samplesbyteR[] = new byte[2*100];
                 byte samplesbyteL[] = new byte[2*100];
                 final byte dataL[] = new byte[2*cycles*100];
@@ -82,11 +81,11 @@ public class StartActivity extends Activity
                 {
                         singleSampleL[iii] = singleSampleR[iii] = 0;
                 }
-                for(int iii = 0; iii < L; iii++ )
+                for(int iii = 0; iii < dutyL; iii++ )
                 {
                         singleSampleL[iii] = 32767;
                 }
-                for(int iii = 0; iii < R; iii++ )
+                for(int iii = 0; iii < dutyR; iii++ )
                 {
                         singleSampleR[iii] = 32767;
                 }

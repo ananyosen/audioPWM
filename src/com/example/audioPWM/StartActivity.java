@@ -70,16 +70,15 @@ public class StartActivity extends Activity
         public void generatePWM(int dutyL, int dutyR)
         {
                 int cycles = (int)(sampleRate*((double)duration/1000))/100;
-                byte samplesbyteR[] = new byte[2*100];
-                byte samplesbyteL[] = new byte[2*100];
-                final byte dataL[] = new byte[2*cycles*100];
-                byte dataR[] = new byte[2*cycles*100];
-                byte dataStereo[] = new byte[2*2*cycles*100];
+                short dataL[] = new short[cycles*100];
+                short dataR[] = new short[cycles*100];
+                short dataStereo[] = new short[2*cycles*100];
                 short singleSampleL[] = new short[100];
                 short singleSampleR[] = new short[100];
                 for (int iii = 0; iii < 100; iii++)
                 {
-                        singleSampleL[iii] = singleSampleR[iii] = 0;
+                        singleSampleL[iii] = 0;
+                        singleSampleR[iii] = 0;
                 }
                 for(int iii = 0; iii < dutyL; iii++ )
                 {
@@ -89,17 +88,10 @@ public class StartActivity extends Activity
                 {
                         singleSampleR[iii] = 32767;
                 }
-                for (int iii  = 0; iii < 200;)
+                for (int iii = 0; iii < cycles*100; iii++)
                 {
-                        samplesbyteL[iii] = (byte)( singleSampleL[(iii) /2] & 0x00ff );         // converting to bytes
-                        samplesbyteR[iii] = (byte)( singleSampleR[(iii++) /2] & 0x00ff );       // lsb first
-                        samplesbyteL[iii] = (byte)(( singleSampleL[(iii) /2] & 0xff00 ) >>> 8);
-                        samplesbyteR[iii] = (byte)(( singleSampleR[(iii++) /2] & 0xff00 ) >>> 8);
-                }
-                for (int iii = 0; iii < 2*cycles*100; iii++)
-                {
-                        dataL[iii] = samplesbyteL[iii % 200];
-                        dataR[iii] = samplesbyteR[iii % 200];
+                        dataL[iii] = singleSampleL[iii % 100];
+                        dataR[iii] = singleSampleR[iii % 100];
                 }
 
                 /* for stereo, if dataL is say {2, 18, 52}
@@ -107,15 +99,12 @@ public class StartActivity extends Activity
                 *       then complete dataStereo will be
                 *       {2, 5, 18, 25, 52, 35}
                 */
-                int lll = 0, rrr = 0;
-                for (int iii = 0; iii < 2*2*cycles*100;)
+                for (int iii = 0; iii < 2*cycles*100;)
                 {
-                        dataStereo[iii++] = dataL[lll++];
-                        dataStereo[iii++] = dataL[lll++];
-                        dataStereo[iii++] = dataR[rrr++];
-                        dataStereo[iii++] = dataR[rrr++];
+                        dataStereo[iii] = dataL[(iii++)/2];
+                        dataStereo[iii] = dataR[(iii++)/2];
                 }
-                AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, 48000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
+                AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
                 pwm.write(dataStereo, 0, dataStereo.length);
                 pwm.play();
         }

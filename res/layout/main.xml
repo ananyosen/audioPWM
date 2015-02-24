@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
@@ -8,6 +8,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Play"
-                android:id="@+id/button" android:layout_gravity="center_horizontal"/>
-</LinearLayout>
+                android:id="@+id/button" android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+                android:layout_marginBottom="109dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Duty L"
+                android:id="@+id/textView"
+                android:layout_marginTop="120dp" android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true" android:layout_marginLeft="46dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Duty R"
+                android:id="@+id/textView2"
+                android:layout_alignTop="@+id/textView" android:layout_toRightOf="@+id/button"
+                android:layout_marginLeft="49dp"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:text="50" android:layout_below="@+id/textView" android:layout_alignLeft="@+id/textView"
+                android:layout_alignRight="@+id/textView"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:ems="10"
+                android:id="@+id/editText2"
+                android:text="50" android:layout_below="@+id/textView2" android:layout_alignRight="@+id/textView2"
+                android:layout_alignLeft="@+id/textView2"/>
+</RelativeLayout>
 

@@ -18,21 +18,29 @@ public class StartActivity extends Activity
          */
         private final String TAG = "pwm";
         public final int sampleRate = 48000;
-        public final int duration = 200; // in ms
+        public int duration = 1000; // in ms
         boolean running = false;
         Button play;
+        EditText dutyl;
+        EditText dutyr;
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.main);
                 play = (Button) findViewById(R.id.button);
+                dutyl = (EditText) findViewById(R.id.editText);
+                dutyr = (EditText) findViewById(R.id.editText2);
                 play.setOnClickListener(new View.OnClickListener()
                 {
                         @Override
                         public void onClick(View view)
                         {
-                         runPWM(50,50);
+                                String strL = String.valueOf(dutyl.getText());
+                                String strR = String.valueOf(dutyr.getText());
+                                final int dutyL = Integer.parseInt(strL);
+                                final int dutyR = Integer.parseInt(strR);
+                                runPWM(dutyL,dutyR);
                         }
                 });
         }
@@ -41,13 +49,13 @@ public class StartActivity extends Activity
         {
                 running = true;
                 //generatePWM();
-                generatePWM();
+                generatePWM(dutyL, dutyR);
         }
 
-        public void generatePWM()
+        public void generatePWM(int dutyL, int dutyR)
         {
                 int cycles = (int)(sampleRate*((double)duration/1000))/100;
-                int  L = 60, R = 10;
+                int  L = dutyL, R = dutyR;
                 byte samplesbyteR[] = new byte[2*100];
                 byte samplesbyteL[] = new byte[2*100];
                 final byte dataL[] = new byte[2*cycles*100];
@@ -74,9 +82,6 @@ public class StartActivity extends Activity
                         samplesbyteL[iii] = (byte)(( singleSampleL[(iii) /2] & 0xff00 ) >>> 8);
                         samplesbyteR[iii] = (byte)(( singleSampleR[(iii++) /2] & 0xff00 ) >>> 8);
                 }
-//                Log.d(TAG, String.valueOf(samplesbyteL[0]));
-//                float LBuffer[] = new float[100*100];
-//                float RBuffer[] = new float[100*100];
                 for (int iii = 0; iii < 2*cycles*100; iii++)
                 {
                         dataL[iii] = samplesbyteL[iii % 200];

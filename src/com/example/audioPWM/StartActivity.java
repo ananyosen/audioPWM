@@ -23,6 +23,7 @@ public class StartActivity extends Activity
         Button play;
         EditText dutyl;
         EditText dutyr;
+        EditText durTime;
         @Override
         public void onCreate(Bundle savedInstanceState)
         {
@@ -31,6 +32,7 @@ public class StartActivity extends Activity
                 play = (Button) findViewById(R.id.button);
                 dutyl = (EditText) findViewById(R.id.editText);
                 dutyr = (EditText) findViewById(R.id.editText2);
+                durTime = (EditText) findViewById(R.id.editText3);
                 play.setOnClickListener(new View.OnClickListener()
                 {
                         @Override
@@ -38,9 +40,23 @@ public class StartActivity extends Activity
                         {
                                 String strL = String.valueOf(dutyl.getText());
                                 String strR = String.valueOf(dutyr.getText());
+                                String strDur = String.valueOf(durTime.getText());
+                                duration = Integer.parseInt(strDur);
+                                if(duration > 5000 || duration < 1)
+                                {
+                                        sayToast("invalid duration, setting to 1000");
+                                        duration = 1000;
+                                        durTime.setText("1000");
+                                }
                                 final int dutyL = Integer.parseInt(strL);
                                 final int dutyR = Integer.parseInt(strR);
-                                runPWM(dutyL,dutyR);
+                                if (dutyL <= 100 && dutyL >= 0 && dutyR <= 100 && dutyR >= 0)
+                                {
+                                        runPWM(dutyL,dutyR);
+                                } else
+                                {
+                                        sayToast("pwm out of range");
+                                }
                         }
                 });
         }
@@ -48,8 +64,7 @@ public class StartActivity extends Activity
         public void runPWM(int dutyL, int dutyR)
         {
                 running = true;
-                //generatePWM();
-                generatePWM(dutyL, dutyR);
+                new backgroungSound().execute(dutyL, dutyR);
         }
 
         public void generatePWM(int dutyL, int dutyR)
@@ -102,20 +117,30 @@ public class StartActivity extends Activity
                         dataStereo[iii++] = dataR[rrr++];
                 }
                 AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, 48000, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
-//                int nativeSampleRate = pwm.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
-//                Log.d(TAG, String.valueOf(nativeSampleRate));
                 pwm.write(dataStereo, 0, dataStereo.length);
                 pwm.play();
-                play.setText("played");
         }
 
         private void sendLog(String err)
         {
                 Log.d(TAG, err);
         }
+        public void sayToast(String txt)
+        {
+                Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+        }
 
-//        private class sound extends AsyncTask<Void, Void, Void>
-//        {
-//
-//        }
+        private class backgroungSound extends AsyncTask<Integer, Void, Void>
+        {
+                @Override
+                protected Void doInBackground(Integer... a)
+                {
+                        generatePWM(a[0], a[1]);
+                        return null;
+                }
+                protected void onPostExecute(Void v)
+                {
+                        running = false;
+                }
+        }
 }

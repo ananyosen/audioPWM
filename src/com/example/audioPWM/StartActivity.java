@@ -42,6 +42,11 @@ public class StartActivity extends Activity
                                 String strR = String.valueOf(dutyr.getText());
                                 String strDur = String.valueOf(durTime.getText());
                                 duration = Integer.parseInt(strDur);
+                                if(running)
+                                {
+                                        sayToast("wait");
+                                        return;
+                                }
                                 if(duration > 5000 || duration < 1)
                                 {
                                         sayToast("invalid duration, setting to 1000");
@@ -52,7 +57,8 @@ public class StartActivity extends Activity
                                 final int dutyR = Integer.parseInt(strR);
                                 if (dutyL <= 100 && dutyL >= 0 && dutyR <= 100 && dutyR >= 0)
                                 {
-                                        runPWM(dutyL,dutyR);
+                                        play.setText("playing");
+                                        runPWM(dutyL, dutyR);
                                 } else
                                 {
                                         sayToast("pwm out of range");
@@ -107,6 +113,9 @@ public class StartActivity extends Activity
                 AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
                 pwm.write(dataStereo, 0, dataStereo.length);
                 pwm.play();
+                while (pwm.getPlaybackHeadPosition() < dataStereo.length/4)
+                {
+                }
         }
 
         private void sendLog(String err)
@@ -129,6 +138,7 @@ public class StartActivity extends Activity
                 protected void onPostExecute(Void v)
                 {
                         running = false;
+                        play.setText("play");
                 }
         }
 }

@@ -113,7 +113,7 @@ public class StartActivity extends Activity
                 AudioTrack pwm = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT, dataStereo.length, AudioTrack.MODE_STATIC);
                 pwm.write(dataStereo, 0, dataStereo.length);
                 pwm.play();
-                while (pwm.getPlaybackHeadPosition() < dataStereo.length/4)
+                while (pwm.getPlaybackHeadPosition() < dataStereo.length/4)  // one short 2 bytes, 2 channel, 2*2 = 4
                 {
                 }
         }

@@ -56,10 +56,11 @@
       <file leaf-file-name="StartActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/audioPWM/StartActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.470588" vertical-offset="0" max-vertical-offset="2641">
-              <caret line="135" column="32" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.2523719" vertical-offset="1957" max-vertical-offset="2641">
+              <caret line="115" column="117" selection-start-line="115" selection-start-column="117" selection-end-line="115" selection-end-column="117" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="class#backgroungSound#0;class#StartActivity#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -505,12 +506,12 @@
       <workItem from="1424755146160" duration="4443000" />
       <workItem from="1424760053752" duration="7788000" />
       <workItem from="1424777504008" duration="9371000" />
-      <workItem from="1424843511626" duration="2199000" />
+      <workItem from="1424843511626" duration="2374000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23801000" />
+    <option name="totallyTimeSpent" value="23976000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -582,6 +583,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="class#backgroungSound#0;class#StartActivity#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -611,6 +613,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="class#backgroungSound#0;class#StartActivity#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -632,6 +635,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="class#backgroungSound#0;class#StartActivity#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -675,10 +679,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/audioPWM/StartActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.470588" vertical-offset="0" max-vertical-offset="2641">
-          <caret line="135" column="32" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.2523719" vertical-offset="1957" max-vertical-offset="2641">
+          <caret line="115" column="117" selection-start-line="115" selection-start-column="117" selection-end-line="115" selection-end-column="117" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="class#backgroungSound#0;class#StartActivity#0" expanded="true" />
           </folding>
         </state>
       </provider>
